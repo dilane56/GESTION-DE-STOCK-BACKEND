@@ -13,5 +13,5 @@ public class RoleDto {
     @NotBlank(message = "le role ne doit pas être vide")
     private String roleName;
     @NotNull(message = "l'utilisateur est obligatoire")
-    private Utilisateur utilisateur;
+    private UtilisateurDto utilisateur;
 }

@@ -3,7 +3,9 @@ package org.kfokam48.gestiondestockbackend.mapper;
 import org.kfokam48.gestiondestockbackend.dto.AdresseDto;
 import org.kfokam48.gestiondestockbackend.model.Adresse;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdresseMapper {
     private final ModelMapper modelMapper;
 

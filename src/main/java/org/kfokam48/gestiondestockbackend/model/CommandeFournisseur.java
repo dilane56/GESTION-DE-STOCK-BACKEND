@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "commandefournisseur")
 public class CommandeFournisseur extends AbstractEntity {

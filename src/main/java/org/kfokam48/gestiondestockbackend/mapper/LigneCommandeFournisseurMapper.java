@@ -3,7 +3,9 @@ package org.kfokam48.gestiondestockbackend.mapper;
 import org.kfokam48.gestiondestockbackend.dto.LigneCommandeFournisseurDto;
 import org.kfokam48.gestiondestockbackend.model.LigneCommandeFournisseur;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LigneCommandeFournisseurMapper {
     private final ModelMapper modelMapper;
 

@@ -17,7 +17,7 @@ public class FournisseurDto {
     @NotBlank(message = "le nom du fournisseur ne doit pas être vide")
     private String nom;
     private String prenom;
-    private String adresse;
+    private AdresseDto adresse;
     private String mail;
     @NotNull(message = "le tel du fournisseur ne doit pas être null")
     @NotBlank(message = "le tel du fournisseur ne doit pas être vide")

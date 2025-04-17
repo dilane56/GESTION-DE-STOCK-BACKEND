@@ -3,7 +3,9 @@ package org.kfokam48.gestiondestockbackend.mapper;
 import org.kfokam48.gestiondestockbackend.dto.MvtStkDto;
 import org.kfokam48.gestiondestockbackend.model.MvtStk;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MvtStkMapper {
     private final ModelMapper modelMapper;
 
@@ -11,7 +13,7 @@ public class MvtStkMapper {
         this.modelMapper = modelMapper;
     }
 
-    public MvtStk mvtStktoMvtStkDto(MvtStk mvtStk) {
+    public MvtStk mvtStkDtotoMvtStk(MvtStkDto mvtStk) {
         return modelMapper.map(mvtStk, MvtStk.class);
     }
 

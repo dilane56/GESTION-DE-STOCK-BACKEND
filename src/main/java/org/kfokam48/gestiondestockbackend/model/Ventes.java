@@ -3,6 +3,7 @@ package org.kfokam48.gestiondestockbackend.model;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
@@ -10,7 +11,7 @@ import java.time.Instant;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Data
 @Entity
 public class Ventes extends AbstractEntity{
 

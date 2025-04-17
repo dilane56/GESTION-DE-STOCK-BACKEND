@@ -5,11 +5,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.kfokam48.gestiondestockbackend.model.Adresse;
 import org.kfokam48.gestiondestockbackend.model.Utilisateur;
 
 import java.util.List;
-
+@Data
 public class EntrepriseDto {
     @NotNull(message = "le nom de l'entreprise ne doit pas être null")
     @NotBlank(message = "le nom de l'entreprise ne doit pas être vide")

@@ -3,7 +3,9 @@ package org.kfokam48.gestiondestockbackend.mapper;
 import org.kfokam48.gestiondestockbackend.dto.ArticleDto;
 import org.kfokam48.gestiondestockbackend.model.Article;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ArticleMapper {
     private final ModelMapper modelMapper;
 
@@ -11,7 +13,7 @@ public class ArticleMapper {
         this.modelMapper = modelMapper;
     }
 
-    public Article articleToArticle(Article article) {
+    public Article articleDtoToArticle(ArticleDto article) {
         return modelMapper.map(article, Article.class);
     }
 

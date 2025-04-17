@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
 public class Article  extends AbstractEntity{
 
    private String codeArticle;

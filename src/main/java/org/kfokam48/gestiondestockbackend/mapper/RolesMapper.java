@@ -3,7 +3,9 @@ package org.kfokam48.gestiondestockbackend.mapper;
 import org.kfokam48.gestiondestockbackend.dto.RoleDto;
 import org.kfokam48.gestiondestockbackend.model.Roles;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RolesMapper {
     private final ModelMapper modelMapper;
 
