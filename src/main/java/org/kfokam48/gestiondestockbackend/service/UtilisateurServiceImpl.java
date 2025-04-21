@@ -9,6 +9,7 @@ import org.kfokam48.gestiondestockbackend.mapper.UtilisateurMapper;
 import org.kfokam48.gestiondestockbackend.model.Utilisateur;
 import org.kfokam48.gestiondestockbackend.repository.UtilisateurRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     private final UtilisateurMapper utilisateurMapper;
     private final AdresseMapper adresseMapper;
     private final EntrepriseMapper entrepriseMapper;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository, UtilisateurMapper utilisateurMapper, AdresseMapper adresseMapper, EntrepriseMapper entrepriseMapper) {
         this.utilisateurRepository = utilisateurRepository;
@@ -46,7 +48,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public Utilisateur addUtilisateur(@Valid UtilisateurDto utilisateurDto) {
-
+        utilisateurDto.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
         return utilisateurRepository.save(utilisateurMapper.utilisateurDtoToUtilisateur(utilisateurDto));
     }
 
@@ -56,7 +58,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateur.setNom(utilisateurDto.getNom());
         utilisateur.setPrenom(utilisateurDto.getPrenom());
         utilisateur.setEmail(utilisateurDto.getEmail());
-        utilisateur.setPassword(utilisateurDto.getPassword());
+        utilisateur.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
         utilisateur.setDateNaissance(utilisateurDto.getDateNaissance());
         utilisateur.setPhoto(utilisateurDto.getPhoto());
         utilisateur.setAdresse(adresseMapper.adresseDtoToAdresse(utilisateurDto.getAdresse()));
