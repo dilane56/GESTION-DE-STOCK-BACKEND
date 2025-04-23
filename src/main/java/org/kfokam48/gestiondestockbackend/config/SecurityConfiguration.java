@@ -9,14 +9,21 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration  {
 
+    private final JwtRequestFillter jwtRequestFilter;
     private ApplicationUserDetailsService applicationUserDetailsService;
+
+    public SecurityConfiguration(JwtRequestFillter jwtRequestFilter) {
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,8 +31,9 @@ public class SecurityConfiguration  {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers( "/api/v1/auth/login", "/v3/api-docs/**",
                                 "/swagger-ui/**", "/swagger-resources/**", "/webjars/**","/utilisateurs").permitAll()
-                        .anyRequest().authenticated());
-              //  .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
               //  .headers(headers -> headers.frameOptions().disable());//uniquement lors de l'utilisation d'un BD H2
         return http.build();
     }

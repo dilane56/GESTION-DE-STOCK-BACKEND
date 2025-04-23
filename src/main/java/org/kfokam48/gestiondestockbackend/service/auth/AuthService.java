@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.validation.Valid;
 import org.kfokam48.gestiondestockbackend.dto.auth.AuthenticationRequest;
+import org.kfokam48.gestiondestockbackend.exception.AuthenticationFailedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,33 +21,36 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
-    private static final  SecretKey secretKey = Keys.hmacShaKeyFor(generateSecureKey(256).getEncoded());
+    public static final SecretKey secretKey = Keys.hmacShaKeyFor(generateSecureKey(256).getEncoded());
 
     public AuthService(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
     }
 
-    // This method should contain the logic to authenticate a user and generate a JWT token
     public String authenticateUser(@Valid AuthenticationRequest authRequest) {
         try {
             // Authentification
+            System.out.println("Authentification en cours...");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword())
             );
             // Récupération des détails de l'utilisateur
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getLogin());
+            System.out.println("Authentification réussie pour l'utilisateur : " + userDetails.getUsername());
 //            // Génération du token JWT
             return Jwts.builder()
-                    .setSubject(userDetails.getUsername())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // Expire dans 1 jour
+                    .issuer("gestiondestock")
+                    .subject(userDetails.getUsername())
+                    .issuedAt(new Date())
+                    .expiration(new Date(System.currentTimeMillis() + 86400000)) // Expire dans 1 jour
                     .signWith(secretKey)
                     .compact();
 
         } catch (Exception e) {
             // Gestion des erreurs avec un message explicite
-            throw new RuntimeException("Identifiants invalides : vérifiez l'e-mail ou le mot de passe.", e);
+            System.out.println("Erreur d'authentification : " + e.getMessage());
+            throw new AuthenticationFailedException("Identifiants invalides : vérifiez l'e-mail ou le mot de passe.");
         }
 
     }

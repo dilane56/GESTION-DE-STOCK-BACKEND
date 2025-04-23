@@ -54,7 +54,10 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RessourceNotFoundException("Category avec l'id : "+id +"n'existe pas"));
         category.setCode(categoryDto.getCode());
         category.setDesignation( categoryDto.getDesignation());
-        category.setArticles(categoryMapper.articleDtoListToArticleList(categoryDto.getArticles()));
+        if(categoryDto.getArticles() != null) {
+            category.setArticles(categoryMapper.articleDtoListToArticleList(categoryDto.getArticles()));
+
+        }
         return categoryRepository.save(category);
     }
 
